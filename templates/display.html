@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parsed Resume Data</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="parsed-data">
+        <h2>Parsed Resume Data</h2>
+        <table>
+            
+            <tr>
+                <td>Name:</td>
+                <td>{{ resume[1] }}</td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td>{{ resume[2] }}</td>
+            </tr>
+            <tr>
+                <td>Phone:</td>
+                <td>{{ resume[3] }}</td>
+            </tr>
+            <tr>
+                <td>Skills:</td>
+                <td>{{ resume[4] }}</td>
+            </tr>
+            <tr>
+                <td>Experience:</td>
+                <td>{{ resume[5] }}</td>
+            </tr>
+            <tr>
+                <td>Education:</td>
+                <td>{{ resume[6] }}</td>
+            </tr>
+            <tr>
+                <td>Projects:</td>
+                <td>{{ resume[7] }}</td>
+            </tr>
+            <tr>
+                <td>File Name:</td>
+                <td>{{ resume[8] }}</td>
+            </tr>
+        </table>
+        <a href="/" class="btn">Back To Home</a>
+    </div>
+</body>
+</html>
