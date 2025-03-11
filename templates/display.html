@@ -2,49 +2,111 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parsed Resume Data</title>
+    <title>Resume Details</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <div class="parsed-data">
-        <h2>Parsed Resume Data</h2>
-        <table>
-            
-            <tr>
-                <td>Name:</td>
-                <td>{{ resume[1] }}</td>
-            </tr>
-            <tr>
-                <td>Email:</td>
-                <td>{{ resume[2] }}</td>
-            </tr>
-            <tr>
-                <td>Phone:</td>
-                <td>{{ resume[3] }}</td>
-            </tr>
-            <tr>
-                <td>Skills:</td>
-                <td>{{ resume[4] }}</td>
-            </tr>
-            <tr>
-                <td>Experience:</td>
-                <td>{{ resume[5] }}</td>
-            </tr>
-            <tr>
-                <td>Education:</td>
-                <td>{{ resume[6] }}</td>
-            </tr>
-            <tr>
-                <td>Projects:</td>
-                <td>{{ resume[7] }}</td>
-            </tr>
-            <tr>
-                <td>File Name:</td>
-                <td>{{ resume[8] }}</td>
-            </tr>
-        </table>
-        <a href="/" class="btn">Back To Home</a>
+    <div class="container">
+        <h2>Resume Details</h2>
+        <div class="resume-table">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Name</th>
+                    <td>{{ resume[1] }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ resume[2] }}</td>
+                </tr>
+                <tr>
+                    <th>Phone</th>
+                    <td>{{ resume[3] }}</td>
+                </tr>
+                <tr>
+                    <th>Skills</th>
+                    <td>{{ resume[4] }}</td>
+                </tr>
+                <tr>
+                    <th>Experience</th>
+                    <td>{{ resume[5] }}</td>
+                </tr>
+                <tr>
+                    <th>Education</th>
+                    <td>{{ resume[6] }}</td>
+                </tr>
+                <tr>
+                    <th>Projects</th>
+                    <td>{{ resume[7] }}</td>
+                </tr>
+                <tr>
+                    <th>File Name</th>
+                    <td>{{ resume[8] }}</td>
+                </tr>
+                <tr>
+                    <th>Insights</th>
+                    <td>{{ resume[9] }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Buttons (Properly Positioned Below the Table) -->
+        <div class="button-container">
+            <button id="getJobsBtn" class="btn btn-primary">Get Jobs</button><br><br>
+           
+        </div>
+
+        <!-- Job Recommendations -->
+        <div id="jobResults" class="jobs-table"></div>
+        <a href="/" class="btn btn-secondary">Back to Home</a>
     </div>
+
+    <script>
+        document.getElementById("getJobsBtn").addEventListener("click", function() {
+            fetch("/get_jobs")
+                .then(response => response.json())
+                .then(data => {
+                    const jobResults = document.getElementById("jobResults");
+                    if (data.jobs.length === 0) {
+                        jobResults.innerHTML = "<p>No job recommendations found!</p>";
+                        return;
+                    }
+
+                    let table = `
+                        <h3>Recommended Jobs</h3>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Job Role</th>
+                                <th>Company Name</th>
+                                <th>Company Type</th>
+                                <th>Required Skills</th>
+                                <th>Matched Skills</th>
+                                <th>Missing Skills</th>
+                            </tr>
+                    `;
+
+                    data.jobs.forEach(job => {
+                        table += `
+                            <tr>
+                                <td>${job.job_role}</td>
+                                <td>${job.company_name}</td>
+                                <td>${job.company_type}</td>
+                                <td>${job.skills}</td>
+                                <td>${job.matched_skills}</td>
+                                <td>${job.missing_skills}</td>
+                            </tr>
+                        `;
+                    });
+
+                    table += "</table>";
+                    jobResults.innerHTML = table;
+                })
+                .catch(error => {
+                    console.error("Error fetching jobs:", error);
+                    alert("Failed to fetch job recommendations!");
+                });
+        });
+        
+    </script>
+    
 </body>
 </html>

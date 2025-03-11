@@ -1,48 +1,32 @@
 /* Global Styles */
 body {
-    font-family: 'Lora', serif; /* Sophisticated serif font */
+    font-family: 'Lora', serif;
     margin: 0;
-    padding: 0;
-    background-color: #a2c2f3; /* Soft off-white background for a clean feel */
-    color: #444444; /* Dark grey for readability */
+    padding: 20px;
+    background-color: #a2c2f3;
+    color: #444444;
     line-height: 1.6;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Align content to the top */
-    min-height: auto;
+    align-items: flex-start;
+    min-height: 100vh;
     overflow-x: hidden;
-    overflow-y: auto;
 }
 
-/* Main Container */
-.container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px;
-    background-color: #ffffff; /* Bright, clean white for the content */
-    border-radius: 20px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-out;
-}
-
-.container:hover {
-    transform: scale(1.02); /* Slight hover effect */
-}
-
-/* Upload Form Styling */
+/* Upload Form Container */
 .upload-form {
     max-width: 600px;
     width: 100%;
     padding: 40px;
-    background: linear-gradient(135deg, #81e3d4, #F5F5F5); /* Soft pastel gradient */
+    background: linear-gradient(135deg, #81e3d4, #F5F5F5);
     border-radius: 20px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease, transform 0.3s ease-in-out;
+    margin-bottom: 30px;
 }
 
 .upload-form:hover {
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15); /* Enhanced hover effect */
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
     transform: translateY(-4px);
 }
 
@@ -50,7 +34,7 @@ body {
     text-align: center;
     font-size: 2.5rem;
     font-weight: 700;
-    color: #3F51B5; /* Deep indigo accent for the title */
+    color: #3F51B5;
     margin-bottom: 25px;
 }
 
@@ -59,9 +43,9 @@ body {
     width: 100%;
     padding: 12px;
     margin-bottom: 25px;
-    border: 2px solid #3F51B5; /* Indigo border for inputs */
+    border: 2px solid #3F51B5;
     border-radius: 12px;
-    background-color: #F9F9F9; /* Very light gray background */
+    background-color: #F9F9F9;
     font-size: 16px;
     color: #444444;
     transition: all 0.3s ease;
@@ -69,8 +53,8 @@ body {
 
 .upload-form input[type="file"]:hover,
 .upload-form input[type="file"]:focus {
-    border-color: #7C4DFF; /* Lighter violet border on hover/focus */
-    background-color: #E3F2FD; /* Light blue hover effect */
+    border-color: #7C4DFF;
+    background-color: #E3F2FD;
     outline: none;
 }
 
@@ -79,103 +63,30 @@ body {
 }
 
 /* Submit Button */
-.upload-form button {
+.upload-form button,
+.btn {
     width: 100%;
     padding: 15px;
-    background-color: #7C4DFF; /* Vibrant purple button */
-    color: #fff; /* White text */
+    background-color: #7C4DFF;
+    color: #fff;
     border: none;
     border-radius: 12px;
     cursor: pointer;
     font-size: 18px;
     font-weight: 600;
     transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+    margin-top: 20px;
+    text-align: center;
+    text-decoration: none;
 }
 
-.upload-form button:hover {
-    background-color: #5E35B1; /* Darker purple on hover */
+.upload-form button:hover,
+.btn:hover {
+    background-color: #5E35B1;
     transform: scale(1.05);
 }
 
-.upload-form button:focus {
-    outline: none;
-}
-
-/* Display Page Styles */
-.parsed-data {
-    max-width: 1000px;
-    width: 100%;
-    padding: 40px;
-    background: #FFFFFF; /* Clean white background */
-    border-radius: 20px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
-}
-
-.parsed-data h2 {
-    text-align: center;
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #3F51B5; /* Consistent accent color */
-    margin-bottom: 30px;
-}
-
-/* Table Styling */
-.parsed-data table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.parsed-data table th, .parsed-data table td {
-    padding: 18px;
-    border: 1px solid #DDD;
-    text-align: left;
-    font-size: 16px;
-    color: #333;
-}
-
-.parsed-data table th {
-    background-color: #3F51B5; /* Indigo header */
-    color: #ffffff;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-.parsed-data table tr:nth-child(even) {
-    background-color: #F5F5F5; /* Light gray rows */
-}
-
-.parsed-data table tr:hover {
-    background-color: #7C4DFF; /* Hover effect with vibrant purple */
-    color: #fff; /* Text color change on hover */
-}
-
-.parsed-data table tr:hover td {
-    color: white;
-}
-
-/* Button Styles */
-.btn {
-    display: inline-block;
-    width: 100%;
-    padding: 15px;
-    background-color: #3F51B5; /* Button with indigo background */
-    color: #fff;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 12px;
-    font-size: 18px;
-    font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
-    margin-top: 20px;
-}
-
-.btn:hover {
-    background-color: #5E35B1; /* Darker purple on hover */
-    transform: scale(1.05); /* Button scaling effect */
-}
-
+.upload-form button:focus,
 .btn:focus {
     outline: none;
 }
@@ -195,13 +106,83 @@ body {
 }
 
 .messages p.success {
-    background-color: #4CAF50; /* Green for success */
-    color: #2C6A3D;
+    background-color: #4CAF50;
+    color: #fff;
 }
 
 .messages p.error {
-    background-color: #FF5252; /* Red for error */
-    color: #9B2D2D;
+    background-color: #FF5252;
+    color: #fff;
+}
+
+/* Resume Details Container */
+.container {
+    max-width: 1000px;
+    width: 100%;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.container:hover {
+    transform: scale(1.02);
+}
+
+/* Resume Details Header */
+h2, h3 {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #3F51B5;
+    margin-bottom: 20px;
+}
+
+/* Resume Details Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 15px;
+    border: 1px solid #DDD;
+    text-align: left;
+    font-size: 16px;
+    color: #333;
+}
+
+th {
+    background-color: #3F51B5;
+    color: #ffffff;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+tr:nth-child(even) {
+    background-color: #F5F5F5;
+}
+
+tr:hover {
+    background-color: #7C4DFF;
+    color: #fff;
+}
+
+tr:hover td {
+    color: white;
+}
+
+/* Recommended Jobs Table */
+.jobs-table h3 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.jobs-table table {
+    margin-top: 20px;
 }
 
 /* Smooth fade-in for messages */
@@ -222,19 +203,21 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .upload-form, .parsed-data {
+    .upload-form, .container {
         padding: 20px;
     }
 
-    .upload-form h2, .parsed-data h2 {
+    h2, h3 {
         font-size: 1.8rem;
     }
 
-    .parsed-data table th, .parsed-data table td {
+    th, td {
         font-size: 14px;
     }
 
-    .upload-form input[type="file"], .upload-form button, .btn {
+    .upload-form button,
+    .btn {
         padding: 12px;
+        font-size: 16px;
     }
 }
