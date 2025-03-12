@@ -60,7 +60,37 @@ def find_next_section(text, start_index):
         if header_index != -1 and header_index < next_index:
             next_index = header_index
     return next_index
+# Dictionary to map skill variations to their canonical form
+skill_variations = {
+    "nodejs": "node.js",
+    "node.js": "node.js",
+    "reactjs": "react",
+    "react.js": "react",
+    "javascript": "js",
+    "typescript": "ts",
+    "c++": "cpp",
+    "c#": "csharp",
+    "html5": "html",
+    "css3": "css",
+    "postgresql": "postgres",
+    "mongodb": "mongo",
+    "aws": "amazon web services",
+    "gcp": "google cloud platform",
+    "azure": "microsoft azure",
+    "kubernetes": "k8s",
+    "python3": "python",
+    "python2": "python",
+    # Add more variations as needed
+}
+def normalize_skill(skill):
+    """Normalize a skill to its canonical form."""
+    return skill_variations.get(skill.lower(), skill.lower())
 
+def normalize_text(text):
+    """Normalize skill variations in the resume text."""
+    for variation, canonical in skill_variations.items():
+        text = re.sub(rf"\b{re.escape(variation)}\b", canonical, text, flags=re.IGNORECASE)
+    return text
 # Parse resume text
 def parse_resume(text):
     data = {
@@ -73,6 +103,9 @@ def parse_resume(text):
         "projects": "",
         "insights": ""
     }
+
+    # Normalize the resume text
+    text = normalize_text(text)
 
     # Extract email
     emails = re.findall(r"[a-z0-9\.\-+_]+@[a-z0-9\.\-+_]+\.[a-z]+", text, re.IGNORECASE)
@@ -89,10 +122,45 @@ def parse_resume(text):
 
     # Extract skills
     skills_list = [
-        "python", "java", "sql", "flask", "django", "postgresql", "machine learning", "data analysis",
-        "javascript", "html", "css", "react", "node.js", "aws", "docker", "git", "rest api", "mongodb"
+        # Technical skills (Programming, Web frameworks, Databases, Cloud, etc.)
+        "python", "java", "c++", "c#", "ruby", "sql", "html", "css", "javascript", "java swings", "typescript", "php",
+        "flask", "django", "nodejs", "expressjs", "react", "reactjs", "nextjs", "angular", "vue.js", "jquery", "bootstrap", "spring", "asp.net",
+        "swift", "kotlin", "objective-c", "go", "scala", "perl", "shell scripting", "bash", "powershell", "rust",
+        "haskell", "sql server", "postgresql", "mongodb", "mysql", "oracle", "redis", "firebase", "sqlite",
+        "hadoop", "spark", "kafka", "elasticsearch", "cassandra", "bigquery", "aws", "azure", "google cloud", "gcp",
+        "terraform", "docker", "kubernetes", "ansible", "puppet", "chef", "jenkins", "git", "gitlab", "github", "bitbucket",
+        "vagrant", "virtualbox", "jenkins", "ci/cd", "maven", "gradle", "npm", "yarn", "bower", "nginx", "apache",
+        "webpack", "graphql", "rest api", "soap", "json", "xml", "protobuf", "swagger", "microservices", "devops",
+        "cloudformation", "azure devops", "cloud storage", "cloud architecture", "containerization", "serverless",
+        "elastic beanstalk", "lambda", "cloudwatch", "docker swarm", "nginx", "apache kafka", "fluentd", "prometheus",
+        "grafana", "openstack", "vagrant", "selenium", "pytest", "junit", "mocha", "chai", "karma", "jasmine",
+        "testng", "jupyter", "pandas", "matplotlib", "seaborn", "numpy", "scikit-learn", "tensorflow", "pytorch",
+        "keras", "nltk", "spaCy", "openCV", "d3.js", "tableau", "power bi", "matlab", "sas", "r", "spss", "stata",
+        "excel", "rds", "spark sql", "sas", "apache flink", "databricks", "etl", "business intelligence", "data mining",
+        "data engineering", "data scientist", "etl pipelines", "data lakes", "deep learning", "machine learning",
+        "computer vision", "natural language processing", "predictive analytics", "data visualization", "statistics",
+        "blockchain", "cryptocurrency", "bitcoin", "ethereum", "iot", "iot protocols", "home automation", "arduino",
+        "raspberry pi", "mqtt", "zigbee", "smart contracts", "solidity", "ethereum", "docker", "pytorch", "keras",
+        "tensorflow", "scipy", "data wrangling", "jupyter notebooks", "tableau", "google analytics", "splunk",
+        "elasticsearch", "salesforce", "service now", "aws lambda", "apache spark", "cloud computing", "cloud migration",
+        "blockchain", "nfc", "qr codes", "tcp/ip", "vpn", "pentesting", "ethical hacking", "penetration testing",
+        "security", "open security", "ssl", "tls", "http", "oauth", "network security", "firewall", "siem", "firewall",
+        "authentication", "authorization", "ssh", "sftp", "ssl", "keycloak", "data encryption", "cybersecurity", "risk management",
+        "communication", "teamwork", "leadership", "problem-solving", "creativity", "critical thinking", "time management",
+        "adaptability", "collaboration", "conflict resolution", "empathy", "active listening", "negotiation", "presentation",
+        "public speaking", "decision making", "attention to detail", "interpersonal skills", "self-motivation", "work ethic",
+        "confidentiality", "organizational skills", "stress management", "self-learning", "positive attitude", "customer service",
+        "accountability", "delegation", "mentorship", "project management", "resource management", "goal setting",
+        "strategic thinking", "analytical thinking", "emotional intelligence", "networking", "team building", "influencing",
+        "persuasion", "flexibility", "confidentiality", "coaching", "facilitation", "mindfulness", "decision-making",
+        "adaptability", "learning agility", "self-awareness", "conflict management", "collaboration skills", "relationship-building"
     ]
-    found_skills = [skill for skill in skills_list if re.search(rf"\b{re.escape(skill)}\b", text, re.IGNORECASE)]
+
+    # Normalize skills in the skills list
+    normalized_skills_list = [normalize_skill(skill) for skill in skills_list]
+
+    # Find skills in the resume text
+    found_skills = [skill for skill in normalized_skills_list if re.search(rf"\b{re.escape(skill)}\b", text, re.IGNORECASE)]
     data["skills"] = ", ".join(found_skills)
 
     # Extract experience
@@ -206,16 +274,22 @@ def get_jobs():
             missing_skills = job_skills_set.difference(combined_skills)
 
             if matched_skills:
+                # Calculate relevance score (percentage of matched skills)
+                relevance_score = (len(matched_skills) / len(job_skills_set)) * 100
+                relevance_score = round(relevance_score, 2)  # Round to 2 decimal places
+
                 recommended_jobs.append({
                     "job_role": job_role,
                     "company_name": company_name,
                     "company_type": company_type,
                     "skills": job_skills,
                     "matched_skills": ", ".join(matched_skills),
-                    "missing_skills": ", ".join(missing_skills)
+                    "missing_skills": ", ".join(missing_skills),
+                    "relevance_score": relevance_score
                 })
 
-        ranked_jobs = sorted(recommended_jobs, key=lambda x: len(x["matched_skills"].split(", ")), reverse=True)[:5]
+        # Rank jobs by relevance score (highest first)
+        ranked_jobs = sorted(recommended_jobs, key=lambda x: x["relevance_score"], reverse=True)[:5]
 
         return jsonify({"jobs": ranked_jobs})
 

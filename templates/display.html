@@ -52,11 +52,10 @@
         <!-- Buttons (Properly Positioned Below the Table) -->
         <div class="button-container">
             <button id="getJobsBtn" class="btn btn-primary">Get Jobs</button><br><br>
-           
         </div>
 
         <!-- Job Recommendations -->
-        <div id="jobResults" class="jobs-table"></div>
+        <div id="jobResults" class="jobs-list"></div>
         <a href="/" class="btn btn-secondary">Back to Home</a>
     </div>
 
@@ -71,42 +70,32 @@
                         return;
                     }
 
-                    let table = `
+                    let list = `
                         <h3>Recommended Jobs</h3>
-                        <table class="table table-bordered">
-                            <tr>
-                                <th>Job Role</th>
-                                <th>Company Name</th>
-                                <th>Company Type</th>
-                                <th>Required Skills</th>
-                                <th>Matched Skills</th>
-                                <th>Missing Skills</th>
-                            </tr>
+                        <ul class="job-list">
                     `;
 
                     data.jobs.forEach(job => {
-                        table += `
-                            <tr>
-                                <td>${job.job_role}</td>
-                                <td>${job.company_name}</td>
-                                <td>${job.company_type}</td>
-                                <td>${job.skills}</td>
-                                <td>${job.matched_skills}</td>
-                                <td>${job.missing_skills}</td>
-                            </tr>
+                        list += `
+                            <li class="job-item">
+                                <strong>Job Role:</strong> ${job.job_role}<br>
+                                <strong>Company:</strong> ${job.company_name} (${job.company_type})<br>
+                                <strong>Skills:</strong> ${job.skills}<br>
+                                <strong>Relevance Score:</strong> ${job.relevance_score}%<br>
+                                <strong style="color: green;">Matched Skills:</strong> ${job.matched_skills}<br>
+                               <strong style="color: red;">Missing Skills:</strong> ${job.missing_skills}<br>
+                            </li>
                         `;
                     });
 
-                    table += "</table>";
-                    jobResults.innerHTML = table;
+                    list += "</ul>";
+                    jobResults.innerHTML = list;
                 })
                 .catch(error => {
                     console.error("Error fetching jobs:", error);
                     alert("Failed to fetch job recommendations!");
                 });
         });
-        
     </script>
-    
 </body>
 </html>
