@@ -64,8 +64,9 @@ def find_next_section(text, start_index):
 skill_variations = {
     "nodejs": "node.js",
     "node.js": "node.js",
-    "reactjs": "react",
+    "react.js": "reactjs",
     "react.js": "react",
+    "next.js": "nextjs",
     "javascript": "js",
     "typescript": "ts",
     "c++": "cpp",
@@ -298,4 +299,4 @@ def get_jobs():
         return jsonify({"jobs": []})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True) 
